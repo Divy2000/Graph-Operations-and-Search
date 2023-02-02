@@ -3,9 +3,9 @@ import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.model.*;
 import guru.nidi.graphviz.parse.Parser;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.*;
 
 import static guru.nidi.graphviz.model.Factory.*;
@@ -167,6 +167,41 @@ public class myGraphClass {
             Graphviz.fromGraph(g).width(900).render(Format.PNG).toFile(new File("example/ex2.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void outputDOTGraph(String path){
+        if (!path.contains(".dot")){
+            String[] filepath_ = path.split("\\.");
+            path = filepath_[0] + ".dot";
+            System.out.println("The file extension was corrected to '.dot' and now the filepath is " + path);
+        }
+        Graphviz viz = Graphviz.fromGraph(g);
+        try {
+            viz.render(Format.DOT).toFile(new File(path));
+            System.out.println("The .dot file has been successfully created/updated.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void outputGraphics(String path, String format){
+        BufferedImage bufferedImage = Graphviz.fromGraph(g).height(800).width(800).render(Format.PNG).toImage();
+        format = format.toLowerCase();
+        if (format.contains("png")){
+            try {
+                ImageIO.write(bufferedImage, "png", new File(path));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if(format.contains("jpg") || format.contains("jpeg")){
+            try {
+                ImageIO.write(bufferedImage, "jpg", new File(path));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Currently we only support PNG and JPG formats.");
         }
     }
 }
