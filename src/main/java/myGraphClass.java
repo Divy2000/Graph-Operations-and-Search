@@ -117,4 +117,56 @@ public class myGraphClass {
             removeNode(label_);
         }
     }
+
+    public  void addEdge(String srcLabel, String dstLabel){
+        Collection<MutableNode> mn = g.nodes();
+
+        boolean srcFlag = true;
+        boolean dstFlag = true;
+        for(MutableNode n:mn){
+            if(n.name().toString().equals(srcLabel)){
+                srcFlag = false;
+            }
+            if(n.name().toString().equals(dstLabel)){
+                dstFlag = false;
+            }
+        }
+
+        if(srcFlag){
+            addNode(srcLabel);
+        }
+        if(dstFlag){
+            addNode(dstLabel);
+        }
+
+        mn = g.nodes();
+
+        for(MutableNode n: mn){
+            if (n.name().toString().equals(srcLabel)){
+                n.addLink(dstLabel);
+                break;
+            }
+        }
+    }
+
+    public void removeEdge(String srcLabel, String dstLabel) {
+        MutableGraph g1 = mutGraph().setDirected(g.isDirected()).setStrict(g.isStrict()).setCluster(g.isCluster()).setName(g.name().toString());
+        Collection<MutableNode> nodes_ = g.nodes();
+        for(MutableNode mNode : nodes_){
+            g1 = addNode(mNode.name().toString(), g1);
+        }
+        Collection<Link> edges_ = g.edges();
+        for(Link edge: edges_){
+            if (!(edge.name().toString().contains(srcLabel) && edge.name().toString().contains(dstLabel))) {
+                String[] nodesOfEdge = edge.name().toString().split("--");
+                g1 = addEdge(nodesOfEdge[0], nodesOfEdge[1], g1);
+            }
+        }
+        g = g1;
+        try {
+            Graphviz.fromGraph(g).width(900).render(Format.PNG).toFile(new File("example/ex2.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

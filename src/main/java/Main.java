@@ -19,9 +19,10 @@ public class Main {
             g.removeNode("green");
             String[] nodesToAdd = {"node1", "node2"};
             g.addNodes(nodesToAdd);
-            String[] nodesToRemove = {"test", "black"};
+            String[] nodesToRemove = {"test", "node1"};
             g.removeNodes(nodesToRemove);
-
+            g.addEdge("peach", "orange");
+            g.removeEdge("yellow", "red");
 
 
 //            g.addEdge("white", "black");
