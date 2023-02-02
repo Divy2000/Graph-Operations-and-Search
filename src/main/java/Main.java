@@ -15,6 +15,16 @@ public class Main {
             String graphString = g.toString();
             System.out.println(graphString);
             g.outputGraph(outputTxtPath);
+            g.addNode("test");
+            g.removeNode("green");
+            String[] nodesToAdd = {"node1", "node2"};
+            g.addNodes(nodesToAdd);
+            String[] nodesToRemove = {"test", "black"};
+            g.removeNodes(nodesToRemove);
+
+
+
+//            g.addEdge("white", "black");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
