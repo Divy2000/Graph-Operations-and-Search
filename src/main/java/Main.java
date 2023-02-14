@@ -4,19 +4,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         myGraphClass g = new myGraphClass();
-            boolean running = true;
-            Scanner inputScanner = new Scanner(System.in);
-            System.out.println("Enter the path to the dot file");
-            String graphFilePath = inputScanner.nextLine();
-            try {
-                g.parseGraph(graphFilePath);
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            String nodeLabel, nodeLabels, node1, node2, filepath;
-            String[] nodeLabelList;
-            while(running) {
+        boolean running = true;
+        Scanner inputScanner = new Scanner(System.in);
+        System.out.println("Enter the path to the dot file");
+        String graphFilePath = inputScanner.nextLine();
+        try {
+            g.parseGraph(graphFilePath);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String nodeLabel, nodeLabels, node1, node2, filepath;
+        String[] nodeLabelList;
+        while(running) {
                 System.out.println("\nChoose one of the following options");
                 System.out.println("0 -> Print graph details");
                 System.out.println("1 -> Output graph details to a text file");

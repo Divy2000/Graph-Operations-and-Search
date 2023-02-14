@@ -22,7 +22,7 @@ public class myGraphClass {
         }
     }
 
-    private Set<String> getLabels(){
+    public Set<String> getLabels(){
         Set<String> labelSet = new HashSet<>();
         for (MutableNode entries : g.nodes()) {
             labelSet.add(entries.name().toString());
@@ -38,7 +38,7 @@ public class myGraphClass {
         for (String label: labelSet) {
             output += label + "\n";
         }
-        output = output.substring(0, output.length()-2) + "\n\n";
+        output = output.substring(0, output.length()-1) + "\n\n";
         String tempOutput = "The edges are :-\n";
         int edgeCount = 0;
         for (Link edge : g.edges()) {
