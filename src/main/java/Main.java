@@ -34,8 +34,7 @@ public class Main {
                 String choice = inputScanner.nextLine();
                 switch (choice){
                     case "0":
-                        String graphDetails = g.toString();
-                        System.out.println(graphDetails);
+                        System.out.println(g);
                         break;
                     case "1":
                         System.out.println("Enter the filepath of the output file: ");
