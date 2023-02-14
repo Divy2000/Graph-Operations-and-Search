@@ -50,11 +50,10 @@ public class Main {
                         System.out.println("Enter the labels of node you want to add separated by comma ('a,b,c'): ");
                         nodeLabels = inputScanner.nextLine();
                         nodeLabelList = nodeLabels.split(",");
-                        g.removeNodes(nodeLabelList);
+                        g.addNodes(nodeLabelList);
                         break;
                     case "4":
                         System.out.println("Enter the first/source node of the edge");
-                        inputScanner.nextLine();
                         node1 = inputScanner.nextLine();
                         System.out.println("Enter the second/target node of the edge");
                         node2 = inputScanner.nextLine();
@@ -73,7 +72,6 @@ public class Main {
                         break;
                     case "7":
                         System.out.println("Enter the first/source node of the edge");
-                        inputScanner.nextLine();
                         node1 = inputScanner.nextLine();
                         System.out.println("Enter the second/target node of the edge");
                         node2 = inputScanner.nextLine();
@@ -81,12 +79,11 @@ public class Main {
                         break;
                     case "8":
                         System.out.println("Enter the path of the output .dot file");
-                        inputScanner.nextLine();
                         filepath = inputScanner.nextLine();
                         g.outputDOTGraph(filepath);
                         break;
                     case "9":
-                        System.out.print("Enter path to output the image of the final graph : ");
+                        System.out.println("Enter path to output the image of the final graph");
                         filepath = inputScanner.nextLine();
                         String[] outputImageDetails = filepath.split("\\.");
                         g.outputGraphics(filepath, outputImageDetails[1]);
@@ -94,6 +91,8 @@ public class Main {
                     case "Q":
                         running = false;
                         break;
+                    default:
+                        System.out.println("Enter the correct choice");
                 }
             }
     }

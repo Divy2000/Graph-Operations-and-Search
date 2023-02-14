@@ -163,11 +163,6 @@ public class myGraphClass {
             }
         }
         g = g1;
-        try {
-            Graphviz.fromGraph(g).width(900).render(Format.PNG).toFile(new File("example/ex2.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void outputDOTGraph(String path){
