@@ -1,0 +1,34 @@
+graph {
+{
+graph ["rank"="same"]
+"white"
+}
+{
+graph ["rank"="same"]
+"cyan"
+"yellow"
+"pink"
+}
+{
+graph ["rank"="same"]
+"red"
+"green"
+"blue"
+}
+{
+graph ["rank"="same"]
+"black"
+}
+"white" -- "cyan"
+"white" -- "yellow"
+"white" -- "pink"
+"cyan" -- "blue"
+"cyan" -- "green"
+"blue" -- "black"
+"green" -- "black"
+"yellow" -- "green"
+"yellow" -- "red"
+"red" -- "black"
+"pink" -- "red"
+"pink" -- "blue"
+}
