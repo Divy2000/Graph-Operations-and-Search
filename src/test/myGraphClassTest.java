@@ -56,7 +56,7 @@ class myGraphClassTest {
                 {"red", "black"},
                 {"cyan", "blue"}
         };
-        if (g.checkAllNodes(nodeLabelsToCheck) && g.checkEdges(edges) && output == expectedOutput) {
+        if (g.checkAllNodes(nodeLabelsToCheck) && g.checkEdges(edges) && output.equals(expectedOutput)) {
             pass = true;
         }
         assertTrue(pass);
