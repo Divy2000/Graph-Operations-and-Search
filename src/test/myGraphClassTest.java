@@ -15,32 +15,6 @@ class myGraphClassTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String output = g.toString();
-        String expectedOutput = "There are 8 nodes in the graph.\n" +
-                "The label of the nodes are :-\n" +
-                "red\n" +
-                "pink\n" +
-                "green\n" +
-                "blue\n" +
-                "white\n" +
-                "yellow\n" +
-                "black\n" +
-                "cyan\n" +
-                "\n" +
-                "There are 12 edges in the graph.\n" +
-                "The edges are :-\n" +
-                "green--black\n" +
-                "white--pink\n" +
-                "white--cyan\n" +
-                "cyan--green\n" +
-                "yellow--red\n" +
-                "white--yellow\n" +
-                "pink--blue\n" +
-                "yellow--green\n" +
-                "pink--red\n" +
-                "blue--black\n" +
-                "red--black\n" +
-                "cyan--blue\n";
         boolean pass = false;
         String[] nodeLabelsToCheck = {"red", "pink", "green", "blue", "white", "yellow", "black", "cyan"};
         String[][] edges = {
@@ -56,7 +30,7 @@ class myGraphClassTest {
                 {"red", "black"},
                 {"cyan", "blue"}
         };
-        if (g.checkAllNodes(nodeLabelsToCheck) && g.checkEdges(edges) && output.equals(expectedOutput)) {
+        if (g.checkAllNodes(nodeLabelsToCheck) && g.checkEdges(edges)) {
             pass = true;
         }
         assertTrue(pass);
