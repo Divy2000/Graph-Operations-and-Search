@@ -14,6 +14,42 @@ import static guru.nidi.graphviz.model.Factory.*;
 
 public class myGraphClass {
     MutableGraph g = null;
+
+    public boolean checkAllNodes(String[] nodeLabels) {
+        Set<String> labelSet = getLabels();
+        if (nodeLabels.length != labelSet.size()) {
+            return false;
+        }
+        for(String label : nodeLabels) {
+            if (!labelSet.contains(label)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkEdges(String[][] edgeNodes) {
+        String node1, node2, source, target;
+        Collection<Link> edges = g.edges();
+        for (int i = 0; i < edgeNodes.length; i++) {
+            node1 = edgeNodes[i][0].toLowerCase();
+            node2 = edgeNodes[i][1].toLowerCase();
+            boolean flag = false;
+            for (Link edge: edges) {
+                source = edge.asLinkSource().name().toString().toLowerCase();
+                target = edge.asLinkTarget().name().toString().substring(2).toLowerCase();
+                if (node1.equals(source) && node2.equals(target) || node2.equals(source) && node1.equals(target)) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void parseGraph(String filepath) throws IOException {
         File dot = new File(filepath);
         g = new Parser().read(dot);
