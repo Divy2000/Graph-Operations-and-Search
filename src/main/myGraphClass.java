@@ -28,6 +28,16 @@ public class myGraphClass {
         return true;
     }
 
+    public boolean checkGivenNodes(String[] nodeLabels) {
+        Set<String> labelSet = getLabels();
+        for(String label : nodeLabels) {
+            if (!labelSet.contains(label)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean checkEdges(String[][] edgeNodes) {
         String node1, node2, source, target;
         Collection<Link> edges = g.edges();
