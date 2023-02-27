@@ -2,6 +2,8 @@ package test;
 
 import main.myGraphClass;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,6 +91,9 @@ class myGraphClassTest {
         }
         String outputPath = "src/main/java/testGraph_o.dot";
         g.outputDOTGraph(outputPath);
+        g.outputGraphics("ex1.png", "png");
+        File f = new File("ex1.png");
+        assertTrue(f.exists());
         myGraphClass g1 = new myGraphClass();
         try {
             g1.parseGraph(outputPath);
@@ -119,7 +124,6 @@ class myGraphClassTest {
         if (g1.checkAllNodes(nodeLabelsToCheck) && g1.checkEdges(edges)) {
             passG1 = true;
         }
-
         assertTrue(passG);
         assertTrue(passG1);
     }

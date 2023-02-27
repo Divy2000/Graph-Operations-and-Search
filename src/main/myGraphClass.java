@@ -63,11 +63,6 @@ public class myGraphClass {
     public void parseGraph(String filepath) throws IOException {
         File dot = new File(filepath);
         g = new Parser().read(dot);
-        try {
-            Graphviz.fromGraph(g).height(100).render(Format.PNG).toFile(new File("example/ex1.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Set<String> getLabels(){
