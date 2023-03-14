@@ -1,4 +1,4 @@
-package java;
+package application;
 
 import guru.nidi.graphviz.model.Node;
 

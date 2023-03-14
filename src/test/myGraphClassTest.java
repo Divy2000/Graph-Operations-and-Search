@@ -1,6 +1,6 @@
 package test;
 
-import java.myGraphClass;
+import application.myGraphClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 class myGraphClassTest {
-    String filepath = "src/main/testGraph.dot";
+    String filepath = "application/main/testGraph.dot";
     @Test
     void feature1() {
         myGraphClass g = new myGraphClass();
@@ -89,7 +89,7 @@ class myGraphClassTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String outputPath = "src/main/java/testGraph_o.dot";
+        String outputPath = "application/main/java/testGraph_o.dot";
         g.outputDOTGraph(outputPath);
         g.outputGraphics("ex1.png", "png");
         File f = new File("ex1.png");
