@@ -1,4 +1,4 @@
-package main;
+package java;
 
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
@@ -241,5 +241,10 @@ public class myGraphClass {
         } else {
             System.out.println("Currently we only support PNG and JPG formats.");
         }
+    }
+
+    public Path GraphSearch(Node src, Node dst) {
+        Path p = new Path();
+        return p;
     }
 }

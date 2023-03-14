@@ -1,9 +1,11 @@
+package java;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        main.myGraphClass g = new main.myGraphClass();
+        myGraphClass g = new myGraphClass();
         boolean running = true;
         Scanner inputScanner = new Scanner(System.in);
         System.out.println("Enter the path to the dot file");

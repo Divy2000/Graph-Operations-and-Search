@@ -1,7 +1,9 @@
-import java.util.ArrayList;
-import java.util.List;
+package java;
 
 import guru.nidi.graphviz.model.Node;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Path {
     private List<Node> nodes;
