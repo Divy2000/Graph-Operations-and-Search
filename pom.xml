@@ -39,4 +39,9 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <sourceDirectory>src/main</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
+    </build>
 </project>
