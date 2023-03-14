@@ -1,4 +1,7 @@
+package test;
+
 import main.myGraphClass;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -33,7 +36,7 @@ class myGraphClassTest {
         if (g.checkAllNodes(nodeLabelsToCheck) && g.checkEdges(edges)) {
             pass = true;
         }
-        assertTrue(pass);
+        Assertions.assertTrue(pass);
     }
 
     @Test
@@ -46,18 +49,18 @@ class myGraphClassTest {
         }
         g.addNode("wow");
         String[] nodeToCheck = {"wow"};
-        assertTrue(g.checkGivenNodes(nodeToCheck));
+        Assertions.assertTrue(g.checkGivenNodes(nodeToCheck));
 
         String[] labels = {"node1", "node2"};
         g.addNodes(labels);
-        assertTrue(g.checkGivenNodes(labels) );
+        Assertions.assertTrue(g.checkGivenNodes(labels) );
 
 
         g.removeNode("wow");
-        assertFalse(g.checkGivenNodes(nodeToCheck));
+        Assertions.assertFalse(g.checkGivenNodes(nodeToCheck));
 
         g.removeNodes(labels);
-        assertFalse(g.checkGivenNodes(labels));
+        Assertions.assertFalse(g.checkGivenNodes(labels));
     }
 
     @Test
@@ -73,10 +76,10 @@ class myGraphClassTest {
         String[][] edges = {
                 {"red", "blue"},
         };
-        assertTrue(g.checkEdges(edges));
+        Assertions.assertTrue(g.checkEdges(edges));
 
         g.removeEdge("red", "blue");
-        assertFalse(g.checkEdges(edges));
+        Assertions.assertFalse(g.checkEdges(edges));
     }
 
     @Test
@@ -91,7 +94,7 @@ class myGraphClassTest {
         g.outputDOTGraph(outputPath);
         g.outputGraphics("ex1.png", "png");
         File f = new File("ex1.png");
-        assertTrue(f.exists());
+        Assertions.assertTrue(f.exists());
         myGraphClass g1 = new myGraphClass();
         try {
             g1.parseGraph(outputPath);
@@ -122,7 +125,7 @@ class myGraphClassTest {
         if (g1.checkAllNodes(nodeLabelsToCheck) && g1.checkEdges(edges)) {
             passG1 = true;
         }
-        assertTrue(passG);
-        assertTrue(passG1);
+        Assertions.assertTrue(passG);
+        Assertions.assertTrue(passG1);
     }
 }

@@ -42,6 +42,6 @@
 
     <build>
         <sourceDirectory>src/main</sourceDirectory>
-        <testSourceDirectory>test</testSourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
     </build>
 </project>
