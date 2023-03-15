@@ -89,7 +89,7 @@ class myGraphClassTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String outputPath = "src/main/java/testGraph_o.dot";
+        String outputPath = "src/main/testGraph_o.dot";
         g.outputDOTGraph(outputPath);
         g.outputGraphics("ex1.png", "png");
         File f = new File("ex1.png");
