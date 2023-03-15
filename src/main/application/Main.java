@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.util.Scanner;
+import static guru.nidi.graphviz.model.Factory.node;
 
 public class Main {
     public static void main(String[] args) {
@@ -30,6 +31,7 @@ public class Main {
                 System.out.println("7 -> Remove an edge from the graph");
                 System.out.println("8 -> Output graph to .dot file");
                 System.out.println("9 -> Output graph to an image file");
+                System.out.println("10 -> Perform dfs search in the graph");
                 System.out.println("Q -> Exit the software");
                 System.out.println("Enter your choice");
 
@@ -89,6 +91,14 @@ public class Main {
                         filepath = inputScanner.nextLine();
                         String[] outputImageDetails = filepath.split("\\.");
                         g.outputGraphics(filepath, outputImageDetails[1]);
+                        break;
+                    case "10":
+                        System.out.println("Enter the first/source node");
+                        node1 = inputScanner.nextLine();
+                        System.out.println("Enter the second/target node");
+                        node2 = inputScanner.nextLine();
+                        Path p = g.GraphSearch(node(node1), node(node2));
+                        System.out.println(p.toString());
                         break;
                     case "Q":
                         running = false;

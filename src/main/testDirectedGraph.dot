@@ -1,0 +1,5 @@
+digraph example1 {
+    b
+    node[color=red]
+    a -> b
+}
