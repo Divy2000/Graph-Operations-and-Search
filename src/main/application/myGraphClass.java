@@ -12,6 +12,10 @@ import java.util.*;
 
 import static guru.nidi.graphviz.model.Factory.*;
 
+enum SearchType {
+    BFS,
+    DFS
+}
 public class myGraphClass {
     MutableGraph g = null;
 
@@ -261,7 +265,7 @@ public class myGraphClass {
         Map<String, List<String>> addEdge(String src, String dst, Map<String, List<String>> adjList);
     }
 
-    public Path GraphSearch(Node src, Node dst) {
+    public Path GraphSearch(Node src, Node dst, SearchType searchType) {
         String src_s = src.name().toString();
         String dst_s = dst.name().toString();
 
@@ -291,29 +295,51 @@ public class myGraphClass {
             }
         }
         Map<String, String> parent = new HashMap<>();
-        Queue<String> queue = new LinkedList<>();
         Set<String> visited = new HashSet<>();
-
-        queue.add(src_s);
         visited.add(src_s);
         parent.put(src_s, null);
+        switch(searchType) {
+          case BFS:
+            Queue<String> queue = new LinkedList<>();
 
-        while (!queue.isEmpty()) {
-            String curr = queue.poll();
+            queue.add(src_s);
 
-            if (curr.equals(dst_s)) {
-                return getPath(src_s, dst_s, parent);
-            }
+            while (!queue.isEmpty()) {
+                String curr = queue.poll();
+                if (curr.equals(dst_s)) {
+                  return getPath(src_s, dst_s, parent);
+                }
 
-            for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    parent.put(neighbor, curr);
-                    queue.add(neighbor);
+                for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        parent.put(neighbor, curr);
+                        queue.add(neighbor);
+                    }
                 }
             }
-        }
+            break;
+          case DFS:
+            Stack<String> stack = new Stack<>();
 
+            stack.push(src_s);
+
+            while (!stack.isEmpty()) {
+                String curr = stack.pop();
+                if (curr.equals(dst_s)) {
+                    return getPath(src_s, dst_s, parent);
+                }
+
+                for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        parent.put(neighbor, curr);
+                        stack.push(neighbor);
+                    }
+                }
+              }
+              break;
+        }
         return null;
-    }
-}
+      }
+   }

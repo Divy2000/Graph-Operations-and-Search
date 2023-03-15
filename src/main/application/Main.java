@@ -31,7 +31,7 @@ public class Main {
                 System.out.println("7 -> Remove an edge from the graph");
                 System.out.println("8 -> Output graph to .dot file");
                 System.out.println("9 -> Output graph to an image file");
-                System.out.println("10 -> Perform BFS search in the graph");
+                System.out.println("10 -> Perform BFS search or DFS search in the graph");
                 System.out.println("Q -> Exit the software");
                 System.out.println("Enter your choice");
 
@@ -97,7 +97,22 @@ public class Main {
                         node1 = inputScanner.nextLine();
                         System.out.println("Enter the second/target node");
                         node2 = inputScanner.nextLine();
-                        Path p = g.GraphSearch(node(node1), node(node2));
+                        System.out.println("Enter the search type 'bfs' or 'dfs'");
+                        boolean validSearchType = false;
+                        SearchType searchType = null;
+                        while (!validSearchType) {
+                          String searchType_s = inputScanner.nextLine();
+                          if (searchType_s.toLowerCase().equals("bfs")) {
+                            searchType = SearchType.BFS;
+                            validSearchType = true;
+                          } else if (searchType_s.toLowerCase().equals("dfs")) {
+                            searchType = SearchType.DFS;
+                            validSearchType = true;
+                          } else {
+                            System.out.println("Please enter valid search type");
+                          }
+                        }
+                        Path p = g.GraphSearch(node(node1), node(node2), searchType);
                         System.out.println(p.toString());
                         break;
                     case "Q":
