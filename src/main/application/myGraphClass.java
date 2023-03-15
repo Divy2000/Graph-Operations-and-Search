@@ -243,8 +243,77 @@ public class myGraphClass {
         }
     }
 
+    private Path getPath(String src, String dst, Map<String, String> parent) {
+        Path path = new Path();
+        String curr = dst;
+        while (curr != null) {
+            path.addNode(curr);
+            curr = parent.get(curr);
+        }
+        Collections.reverse(path.getNodes());
+        if (!path.getNodes().get(0).equals(src)) {
+            return null;
+        }
+        return path;
+    }
+
+    interface addToMap_i {
+        Map<String, List<String>> addEdge(String src, String dst, Map<String, List<String>> adjList);
+    }
+
     public Path GraphSearch(Node src, Node dst) {
+        String src_s = src.name().toString();
+        String dst_s = dst.name().toString();
+
+        addToMap_i addToMapp = (src1, dst1, adjList) -> {
+            if (!adjList.containsKey(src1)) {
+                adjList.put(src1, new ArrayList<>());
+            }
+            adjList.get(src1).add(dst1);
+            return adjList;
+        };
+
+        Map<String, List<String>> adjList = new HashMap<>();
+
         Path p = new Path();
-        return p;
+        if (g.isDirected() == false) {
+            for(Link edge: g.edges()) {
+                String source = edge.name().toString().split("--")[0];
+                String dest = edge.name().toString().split("--")[1];
+                adjList = addToMapp.addEdge(source, dest, adjList);
+                adjList = addToMapp.addEdge(dest, source, adjList);
+            }
+        } else {
+            for(Link edge: g.edges()) {
+                String source = edge.name().toString().split("--")[0];
+                String dest = edge.name().toString().split("--")[1];
+                adjList = addToMapp.addEdge(source, dest, adjList);
+            }
+        }
+        Map<String, String> parent = new HashMap<>();
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+
+        queue.add(src_s);
+        visited.add(src_s);
+        parent.put(src_s, null);
+
+        while (!queue.isEmpty()) {
+            String curr = queue.poll();
+
+            if (curr.equals(dst_s)) {
+                return getPath(src_s, dst_s, parent);
+            }
+
+            for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    parent.put(neighbor, curr);
+                    queue.add(neighbor);
+                }
+            }
+        }
+
+        return null;
     }
 }
