@@ -12,11 +12,11 @@ import java.util.*;
 
 import static guru.nidi.graphviz.model.Factory.*;
 
+enum SearchType {
+    BFS,
+    DFS
+}
 public class myGraphClass {
-    enum SearchType {
-          BFS,
-          DFS
-    }
     MutableGraph g = null;
 
     public boolean checkAllNodes(String[] nodeLabels) {
@@ -343,4 +343,3 @@ public class myGraphClass {
         return null;
       }
    }
-}

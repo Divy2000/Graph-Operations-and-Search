@@ -97,19 +97,19 @@ public class Main {
                         node1 = inputScanner.nextLine();
                         System.out.println("Enter the second/target node");
                         node2 = inputScanner.nextLine();
-                        System.out.println("Enter the search type 'bfs' or 'dfs'")
+                        System.out.println("Enter the search type 'bfs' or 'dfs'");
                         boolean validSearchType = false;
+                        SearchType searchType = null;
                         while (!validSearchType) {
                           String searchType_s = inputScanner.nextLine();
-                          SearchType searchType;
-                          if (searchType_s.toLowercase() == 'bfs') {
+                          if (searchType_s.toLowerCase().equals("bfs")) {
                             searchType = SearchType.BFS;
                             validSearchType = true;
-                          } else if (searchType_s.toLowercase() == 'dfs') {
+                          } else if (searchType_s.toLowerCase().equals("dfs")) {
                             searchType = SearchType.DFS;
                             validSearchType = true;
                           } else {
-                            System.out.println("Please enter valis search type")
+                            System.out.println("Please enter valid search type");
                           }
                         }
                         Path p = g.GraphSearch(node(node1), node(node2), searchType);
