@@ -291,15 +291,15 @@ public class myGraphClass {
             }
         }
         Map<String, String> parent = new HashMap<>();
-        Queue<String> queue = new LinkedList<>();
+        Stack<String> stack = new Stack<>();
         Set<String> visited = new HashSet<>();
 
-        queue.add(src_s);
+        stack.push(src_s);
         visited.add(src_s);
         parent.put(src_s, null);
 
-        while (!queue.isEmpty()) {
-            String curr = queue.poll();
+        while (!stack.isEmpty()) {
+            String curr = stack.pop();
 
             if (curr.equals(dst_s)) {
                 return getPath(src_s, dst_s, parent);
@@ -309,7 +309,7 @@ public class myGraphClass {
                 if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
                     parent.put(neighbor, curr);
-                    queue.add(neighbor);
+                    stack.push(neighbor);
                 }
             }
         }

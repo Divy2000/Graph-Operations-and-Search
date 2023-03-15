@@ -32,7 +32,7 @@ public class Main {
                 System.out.println("7 -> Remove an edge from the graph");
                 System.out.println("8 -> Output graph to .dot file");
                 System.out.println("9 -> Output graph to an image file");
-                System.out.println("10 -> Perform bfs search in the graph");
+                System.out.println("10 -> Perform dfs search in the graph");
                 System.out.println("Q -> Exit the software");
                 System.out.println("Enter your choice");
 
