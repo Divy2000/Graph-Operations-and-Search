@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.util.Scanner;
-
 import static guru.nidi.graphviz.model.Factory.node;
 
 public class Main {
