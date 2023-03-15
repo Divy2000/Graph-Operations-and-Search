@@ -1,12 +1,11 @@
 package test;
 
-import main.myGraphClass;
+import application.myGraphClass;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import static org.junit.jupiter.api.Assertions.*;
 
 class myGraphClassTest {
     String filepath = "src/main/testGraph.dot";
