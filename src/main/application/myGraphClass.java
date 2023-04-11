@@ -17,7 +17,7 @@ enum SearchType {
     DFS
 }
 public class myGraphClass {
-    MutableGraph g = null;
+    MutableGraph graph = null;
 
     public boolean checkAllNodes(String[] nodeLabels) {
         Set<String> labelSet = getLabels();
@@ -61,7 +61,7 @@ public class myGraphClass {
 
     public boolean checkEdges(String[][] edgeNodes) {
         String node1, node2, source, target;
-        Collection<Link> edges = g.edges();
+        Collection<Link> edges = graph.edges();
         for (int i = 0; i < edgeNodes.length; i++) {
             node1 = edgeNodes[i][0].toLowerCase();
             node2 = edgeNodes[i][1].toLowerCase();
@@ -72,13 +72,13 @@ public class myGraphClass {
     }
 
     public void parseGraph(String filepath) throws IOException {
-        File dot = new File(filepath);
-        g = new Parser().read(dot);
+        File dotFilePath = new File(filepath);
+        graph = new Parser().read(dotFilePath);
     }
 
     public Set<String> getLabels(){
         Set<String> labelSet = new HashSet<>();
-        for (MutableNode entries : g.nodes()) {
+        for (MutableNode entries : graph.nodes()) {
             labelSet.add(entries.name().toString());
         }
         return labelSet;
@@ -95,7 +95,7 @@ public class myGraphClass {
         output = output.substring(0, output.length()-1) + "\n\n";
         String tempOutput = "The edges are :-\n";
         int edgeCount = 0;
-        for (Link edge : g.edges()) {
+        for (Link edge : graph.edges()) {
            tempOutput += edge.name() + "\n";
            edgeCount ++;
         }
@@ -121,7 +121,7 @@ public class myGraphClass {
             System.out.println("The label is already present");
             return;
         }
-        g.add(mutNode(label).asLinkSource());
+        graph.add(mutNode(label).asLinkSource());
     }
 
     public void addNodes(String[] label){
@@ -130,46 +130,46 @@ public class myGraphClass {
         }
     }
 
-    private MutableGraph addEdge(String srcLabel, String dstLabel, MutableGraph g){
-        Collection<MutableNode> mn = g.nodes();
+    private MutableGraph addEdge(String srcLabel, String dstLabel, MutableGraph graph){
+        Collection<MutableNode> mn = graph.nodes();
         for(MutableNode n: mn){
             if (n.name().toString().equals(srcLabel)){
                 n.addLink(dstLabel);
                 break;
             }
         }
-        return g;
+        return graph;
     }
 
     public void removeNode(String label){
         // Get list of nodes
-        MutableGraph g1 = getNodeRemoved(label);
+        MutableGraph tempGraph = getNodeRemoved(label);
 
-        g1 = getEdgesRemoved(label, g1);
-        g = g1;
+        tempGraph = getEdgesRemoved(label, tempGraph);
+        graph = tempGraph;
     }
 
-    private MutableGraph getEdgesRemoved(String label, MutableGraph g1) {
-        Collection<Link> edges_ = g.edges();
+    private MutableGraph getEdgesRemoved(String label, MutableGraph tempGraph) {
+        Collection<Link> edges_ = graph.edges();
         for(Link edge: edges_){
             if (!edge.name().toString().contains(label)) {
                 String[] nodesOfEdge = edge.name().toString().split("--");
-                g1 = addEdge(nodesOfEdge[0], nodesOfEdge[1], g1);
+                tempGraph = addEdge(nodesOfEdge[0], nodesOfEdge[1], tempGraph);
             }
         }
-        return g1;
+        return tempGraph;
     }
 
     private MutableGraph getNodeRemoved(String label) {
-        MutableGraph g1 = mutGraph().setDirected(g.isDirected()).setStrict(g.isStrict()).setCluster(g.isCluster()).setName(g.name().toString());
-        Collection<MutableNode> nodes_ = g.nodes();
+        MutableGraph tempGraph = mutGraph().setDirected(graph.isDirected()).setStrict(graph.isStrict()).setCluster(graph.isCluster()).setName(graph.name().toString());
+        Collection<MutableNode> nodes_ = graph.nodes();
         for(MutableNode mNode : nodes_){
             if (!mNode.name().toString().equals(label)){
-                g1.add(mutNode(mNode.name().toString()).asLinkSource());
-                g1 = g1;
+                tempGraph.add(mutNode(mNode.name().toString()).asLinkSource());
+                tempGraph = tempGraph;
             }
         }
-        return g1;
+        return tempGraph;
     }
 
     public void removeNodes(String[] label){
@@ -179,56 +179,56 @@ public class myGraphClass {
     }
 
     public  void addEdge(String srcLabel, String dstLabel){
-        Collection<MutableNode> mn = g.nodes();
+        Collection<MutableNode> mutableNodes = graph.nodes();
 
-        checkTheNodesOfEdges(srcLabel, dstLabel, mn);
+        checkTheNodesOfEdges(srcLabel, dstLabel, mutableNodes);
 
-        mn = g.nodes();
+        mutableNodes = graph.nodes();
 
-        for(MutableNode n: mn){
-            if (n.name().toString().equals(srcLabel)){
-                n.addLink(dstLabel);
+        for(MutableNode tempNode: mutableNodes){
+            if (tempNode.name().toString().equals(srcLabel)){
+                tempNode.addLink(dstLabel);
                 break;
             }
         }
     }
 
-    private void checkTheNodesOfEdges(String srcLabel, String dstLabel, Collection<MutableNode> mn) {
+    private void checkTheNodesOfEdges(String sourceLabel, String destinationLabel, Collection<MutableNode> mn) {
         boolean srcFlag = true;
         boolean dstFlag = true;
 
         for(MutableNode n: mn){
-            if(n.name().toString().equals(srcLabel)){
+            if(n.name().toString().equals(sourceLabel)){
                 srcFlag = false;
             }
-            if(n.name().toString().equals(dstLabel)){
+            if(n.name().toString().equals(destinationLabel)){
                 dstFlag = false;
             }
         }
 
         if(srcFlag){
-            addNode(srcLabel);
+            addNode(sourceLabel);
         }
         if(dstFlag){
-            addNode(dstLabel);
+            addNode(destinationLabel);
         }
     }
 
-    public void removeEdge(String srcLabel, String dstLabel) {
-        MutableGraph g1 = mutGraph().setDirected(g.isDirected()).setStrict(g.isStrict()).setCluster(g.isCluster()).setName(g.name().toString());
-        Collection<MutableNode> nodes_ = g.nodes();
+    public void removeEdge(String sourceLabel, String destinationLabel) {
+        MutableGraph tempGraph = mutGraph().setDirected(graph.isDirected()).setStrict(graph.isStrict()).setCluster(graph.isCluster()).setName(graph.name().toString());
+        Collection<MutableNode> nodes_ = graph.nodes();
         for(MutableNode mNode : nodes_){
-            g1.add(mutNode(mNode.name().toString()).asLinkSource());
-            g1 = g1;
+            tempGraph.add(mutNode(mNode.name().toString()).asLinkSource());
+            tempGraph = tempGraph;
         }
-        Collection<Link> edges_ = g.edges();
+        Collection<Link> edges_ = graph.edges();
         for(Link edge: edges_){
-            if (!(edge.name().toString().contains(srcLabel) && edge.name().toString().contains(dstLabel))) {
+            if (!(edge.name().toString().contains(sourceLabel) && edge.name().toString().contains(destinationLabel))) {
                 String[] nodesOfEdge = edge.name().toString().split("--");
-                g1 = addEdge(nodesOfEdge[0], nodesOfEdge[1], g1);
+                tempGraph = addEdge(nodesOfEdge[0], nodesOfEdge[1], tempGraph);
             }
         }
-        g = g1;
+        graph = tempGraph;
     }
 
     public void outputDOTGraph(String path){
@@ -237,7 +237,7 @@ public class myGraphClass {
             path = filepath_[0] + ".dot";
             System.out.println("The file extension was corrected to '.dot' and now the filepath is " + path);
         }
-        Graphviz viz = Graphviz.fromGraph(g);
+        Graphviz viz = Graphviz.fromGraph(graph);
         try {
             viz.render(Format.DOT).toFile(new File(path));
             System.out.println("The .dot file has been successfully created/updated.");
@@ -247,7 +247,7 @@ public class myGraphClass {
     }
 
     public void outputGraphics(String path, String format){
-        BufferedImage bufferedImage = Graphviz.fromGraph(g).height(800).width(800).render(Format.PNG).toImage();
+        BufferedImage bufferedImage = Graphviz.fromGraph(graph).height(800).width(800).render(Format.PNG).toImage();
         format = format.toLowerCase();
         if (format.contains("png")){
             try {
@@ -266,47 +266,47 @@ public class myGraphClass {
         }
     }
 
-    private Path getPath(String src, String dst, Map<String, String> parent) {
+    private Path getPath(String source, String destination, Map<String, String> parent) {
         Path path = new Path();
-        String curr = dst;
+        String curr = destination;
         while (curr != null) {
             path.addNode(curr);
             curr = parent.get(curr);
         }
         Collections.reverse(path.getNodes());
-        if (!path.getNodes().get(0).equals(src)) {
+        if (!path.getNodes().get(0).equals(source)) {
             return null;
         }
         return path;
     }
 
-    private Map<String, List<String>> getAdjList(addToMap_i addToMapp, Map<String, List<String>> adjList) {
-        if (g.isDirected() == false) {
-            for(Link edge: g.edges()) {
+    private Map<String, List<String>> getAdjList(addToMap_interface addToMapp, Map<String, List<String>> adjList) {
+        if (graph.isDirected() == false) {
+            for(Link edge: graph.edges()) {
                 String source = edge.name().toString().split("--")[0];
-                String dest = edge.name().toString().split("--")[1];
-                adjList = addToMapp.addEdge(source, dest, adjList);
-                adjList = addToMapp.addEdge(dest, source, adjList);
+                String destination = edge.name().toString().split("--")[1];
+                adjList = addToMapp.addEdge(source, destination, adjList);
+                adjList = addToMapp.addEdge(destination, source, adjList);
             }
         } else {
-            for(Link edge: g.edges()) {
+            for(Link edge: graph.edges()) {
                 String source = edge.name().toString().split("--")[0];
-                String dest = edge.name().toString().split("--")[1];
-                adjList = addToMapp.addEdge(source, dest, adjList);
+                String destination = edge.name().toString().split("--")[1];
+                adjList = addToMapp.addEdge(source, destination, adjList);
             }
         }
         return adjList;
     }
 
-    interface addToMap_i {
-        Map<String, List<String>> addEdge(String src, String dst, Map<String, List<String>> adjList);
+    interface addToMap_interface {
+        Map<String, List<String>> addEdge(String source, String destination, Map<String, List<String>> adjList);
     }
 
-    public Path GraphSearch(Node src, Node dst, SearchType searchType) {
-        String src_s = src.name().toString();
-        String dst_s = dst.name().toString();
+    public Path GraphSearch(Node source, Node destination, SearchType searchType) {
+        String src_string = source.name().toString();
+        String dst_string = destination.name().toString();
 
-        addToMap_i addToMapp = (src1, dst1, adjList) -> {
+        addToMap_interface addToMapp = (src1, dst1, adjList) -> {
             if (!adjList.containsKey(src1)) {
                 adjList.put(src1, new ArrayList<>());
             }
@@ -320,18 +320,18 @@ public class myGraphClass {
         adjList = getAdjList(addToMapp, adjList);
         Map<String, String> parent = new HashMap<>();
         Set<String> visited = new HashSet<>();
-        visited.add(src_s);
-        parent.put(src_s, null);
+        visited.add(src_string);
+        parent.put(src_string, null);
         switch(searchType) {
           case BFS:
             Queue<String> queue = new LinkedList<>();
 
-            queue.add(src_s);
+            queue.add(src_string);
 
             while (!queue.isEmpty()) {
                 String curr = queue.poll();
-                if (curr.equals(dst_s)) {
-                  return getPath(src_s, dst_s, parent);
+                if (curr.equals(dst_string)) {
+                  return getPath(src_string, dst_string, parent);
                 }
 
                 for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
@@ -346,12 +346,12 @@ public class myGraphClass {
           case DFS:
             Stack<String> stack = new Stack<>();
 
-            stack.push(src_s);
+            stack.push(src_string);
 
             while (!stack.isEmpty()) {
                 String curr = stack.pop();
-                if (curr.equals(dst_s)) {
-                    return getPath(src_s, dst_s, parent);
+                if (curr.equals(dst_string)) {
+                    return getPath(src_string, dst_string, parent);
                 }
 
                 for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
