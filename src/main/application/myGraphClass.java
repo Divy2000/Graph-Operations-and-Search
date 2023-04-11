@@ -124,11 +124,6 @@ public class myGraphClass {
         g.add(mutNode(label).asLinkSource());
     }
 
-    private MutableGraph addNode(String label, MutableGraph g) {
-        g.add(mutNode(label).asLinkSource());
-        return g;
-    }
-
     public void addNodes(String[] label){
         for(String label_ : label){
             addNode(label_);
@@ -170,7 +165,8 @@ public class myGraphClass {
         Collection<MutableNode> nodes_ = g.nodes();
         for(MutableNode mNode : nodes_){
             if (!mNode.name().toString().equals(label)){
-                g1 = addNode(mNode.name().toString(), g1);
+                g1.add(mutNode(mNode.name().toString()).asLinkSource());
+                g1 = g1;
             }
         }
         return g1;
@@ -222,7 +218,8 @@ public class myGraphClass {
         MutableGraph g1 = mutGraph().setDirected(g.isDirected()).setStrict(g.isStrict()).setCluster(g.isCluster()).setName(g.name().toString());
         Collection<MutableNode> nodes_ = g.nodes();
         for(MutableNode mNode : nodes_){
-            g1 = addNode(mNode.name().toString(), g1);
+            g1.add(mutNode(mNode.name().toString()).asLinkSource());
+            g1 = g1;
         }
         Collection<Link> edges_ = g.edges();
         for(Link edge: edges_){
