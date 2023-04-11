@@ -214,7 +214,6 @@ public class myGraphClass {
         Collection<MutableNode> nodes_ = graph.nodes();
         for(MutableNode mNode : nodes_){
             tempGraph.add(mutNode(mNode.name().toString()).asLinkSource());
-            tempGraph = tempGraph;
         }
         Collection<Link> edges_ = graph.edges();
         for(Link edge: edges_){
@@ -311,7 +310,6 @@ public class myGraphClass {
 
         Map<String, List<String>> adjList = new HashMap<>();
 
-        Path p = new Path();
         adjList = getAdjList(addToMapp, adjList);
         Map<String, String> parent = new HashMap<>();
         Set<String> visited = new HashSet<>();
