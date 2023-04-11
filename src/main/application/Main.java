@@ -19,7 +19,7 @@ public class Main {
         }
         String nodeLabel, nodeLabels, node1, node2, filepath;
         String[] nodeLabelList;
-        while(running) {
+        while (running) {
                 System.out.println("\nChoose one of the following options");
                 System.out.println("0 -> Print graph details");
                 System.out.println("1 -> Output graph details to a text file");
@@ -112,8 +112,10 @@ public class Main {
                             System.out.println("Please enter valid search type");
                           }
                         }
-                        Path p = g.GraphSearch(node(node1), node(node2), searchType);
-                        System.out.println(p.toString());
+                        Path path = g.GraphSearch(node(node1), node(node2), searchType);
+                        if (path != null) {
+                            System.out.println(path);
+                        }
                         break;
                     case "Q":
                         running = false;

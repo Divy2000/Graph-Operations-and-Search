@@ -260,102 +260,14 @@ public class myGraphClass {
         }
     }
 
-    private Path getPath(String source, String destination, Map<String, String> parent) {
-        Path path = new Path();
-        String curr = destination;
-        while (curr != null) {
-            path.addNode(curr);
-            curr = parent.get(curr);
-        }
-        Collections.reverse(path.getNodes());
-        if (!path.getNodes().get(0).equals(source)) {
-            return null;
-        }
-        return path;
-    }
-
-    private Map<String, List<String>> getAdjList(addToMap_interface addToMapp, Map<String, List<String>> adjList) {
-        if (graph.isDirected() == false) {
-            for(Link edge: graph.edges()) {
-                String source = edge.name().toString().split("--")[0];
-                String destination = edge.name().toString().split("--")[1];
-                adjList = addToMapp.addEdge(source, destination, adjList);
-                adjList = addToMapp.addEdge(destination, source, adjList);
-            }
-        } else {
-            for(Link edge: graph.edges()) {
-                String source = edge.name().toString().split("--")[0];
-                String destination = edge.name().toString().split("--")[1];
-                adjList = addToMapp.addEdge(source, destination, adjList);
-            }
-        }
-        return adjList;
-    }
-
-    interface addToMap_interface {
-        Map<String, List<String>> addEdge(String source, String destination, Map<String, List<String>> adjList);
-    }
-
     public Path GraphSearch(Node source, Node destination, SearchType searchType) {
-        String src_string = source.name().toString();
-        String dst_string = destination.name().toString();
-
-        addToMap_interface addToMapp = (src1, dst1, adjList) -> {
-            if (!adjList.containsKey(src1)) {
-                adjList.put(src1, new ArrayList<>());
-            }
-            adjList.get(src1).add(dst1);
-            return adjList;
-        };
-
-        Map<String, List<String>> adjList = new HashMap<>();
-
-        adjList = getAdjList(addToMapp, adjList);
-        Map<String, String> parent = new HashMap<>();
-        Set<String> visited = new HashSet<>();
-        visited.add(src_string);
-        parent.put(src_string, null);
         switch(searchType) {
           case BFS:
-            Queue<String> queue = new LinkedList<>();
-
-            queue.add(src_string);
-
-            while (!queue.isEmpty()) {
-                String curr = queue.poll();
-                if (curr.equals(dst_string)) {
-                  return getPath(src_string, dst_string, parent);
-                }
-
-                for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
-                    if (!visited.contains(neighbor)) {
-                        visited.add(neighbor);
-                        parent.put(neighbor, curr);
-                        queue.add(neighbor);
-                    }
-                }
-            }
-            break;
+              BFS bfs = new BFS(graph);
+              return bfs.GraphSearch(source, destination, getLabels());
           case DFS:
-            Stack<String> stack = new Stack<>();
-
-            stack.push(src_string);
-
-            while (!stack.isEmpty()) {
-                String curr = stack.pop();
-                if (curr.equals(dst_string)) {
-                    return getPath(src_string, dst_string, parent);
-                }
-
-                for (String neighbor : adjList.getOrDefault(curr, new ArrayList<>())) {
-                    if (!visited.contains(neighbor)) {
-                        visited.add(neighbor);
-                        parent.put(neighbor, curr);
-                        stack.push(neighbor);
-                    }
-                }
-              }
-              break;
+              DFS dfs = new DFS(graph);
+              return dfs.GraphSearch(source, destination, getLabels());
         }
         return null;
       }
