@@ -53,7 +53,7 @@ abstract class GraphSearch {
 
     public abstract String removeFromDataStructure();
 
-    public abstract boolean ifEmpty();
+    public abstract boolean isEmpty();
 
     public Path GraphSearch(Node source, Node destination, Set<String> labels) {
         String src_string = source.name().toString();
@@ -85,7 +85,7 @@ abstract class GraphSearch {
 
         addToDataStructure(src_string);
 
-        while (!ifEmpty()) {
+        while (!isEmpty()) {
             String curr = removeFromDataStructure();
             if (curr.equals(dst_string)) {
                 return getPath(src_string, dst_string, parent);

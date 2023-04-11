@@ -2,8 +2,6 @@ package application;
 
 import guru.nidi.graphviz.model.MutableGraph;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 public class DFS extends GraphSearch{
@@ -23,7 +21,7 @@ public class DFS extends GraphSearch{
     }
 
     @Override
-    public boolean ifEmpty() {
+    public boolean isEmpty() {
         return stack.isEmpty();
     }
 }

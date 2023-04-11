@@ -22,7 +22,7 @@ public class BFS extends GraphSearch{
     }
 
     @Override
-    public boolean ifEmpty() {
+    public boolean isEmpty() {
         return queue.isEmpty();
     }
 }
