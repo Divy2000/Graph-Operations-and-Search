@@ -42,21 +42,17 @@ public class myGraphClass {
         return true;
     }
 
-    private static boolean checkEdge(String node1, String node2, Collection<Link> edges, boolean flag) {
+    private static boolean checkEdge(String node1, String node2, Collection<Link> edges) {
         String source;
         String target;
         for (Link edge: edges) {
             source = edge.asLinkSource().name().toString().toLowerCase();
             target = edge.asLinkTarget().name().toString().substring(2).toLowerCase();
             if (node1.equals(source) && node2.equals(target) || node2.equals(source) && node1.equals(target)) {
-                flag = true;
-                break;
+                return false;
             }
         }
-        if (!flag) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     public boolean checkEdges(String[][] edgeNodes) {
@@ -65,8 +61,7 @@ public class myGraphClass {
         for (int i = 0; i < edgeNodes.length; i++) {
             node1 = edgeNodes[i][0].toLowerCase();
             node2 = edgeNodes[i][1].toLowerCase();
-            boolean flag = false;
-            if (checkEdge(node1, node2, edges, flag)) return false;
+            if (checkEdge(node1, node2, edges)) return false;
         }
         return true;
     }
@@ -135,7 +130,7 @@ public class myGraphClass {
         for(MutableNode n: mn){
             if (n.name().toString().equals(srcLabel)){
                 n.addLink(dstLabel);
-                break;
+                return graph;
             }
         }
         return graph;
