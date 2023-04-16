@@ -6,14 +6,16 @@ import guru.nidi.graphviz.model.Node;
 
 import java.util.*;
 
-abstract class GraphSearch_Template {
+abstract class GraphSearch_Strategy {
     private MutableGraph graph;
+    GraphSearch_interface search;
 
-    GraphSearch_Template(MutableGraph graph) {
+    GraphSearch_Strategy(MutableGraph graph, GraphSearch_interface search_algo) {
         this.graph = graph;
+        this.search = search_algo;
     }
 
-    private Map<String, List<String>> getAdjList(GraphSearch_Template.addToMap_interface addToMapp, Map<String, List<String>> adjList) {
+    private Map<String, List<String>> getAdjList(GraphSearch_Strategy.addToMap_interface addToMapp, Map<String, List<String>> adjList) {
         if (graph.isDirected() == false) {
             for(Link edge: graph.edges()) {
                 String source = edge.name().toString().split("--")[0];
@@ -49,12 +51,6 @@ abstract class GraphSearch_Template {
         Map<String, List<String>> addEdge(String source, String destination, Map<String, List<String>> adjList);
     }
 
-    public abstract void addToDataStructure(String string);
-
-    public abstract String removeFromDataStructure();
-
-    public abstract boolean isEmpty();
-
     public Path GraphSearch(Node source, Node destination, Set<String> labels) {
         String src_string = source.name().toString();
         String dst_string = destination.name().toString();
@@ -67,7 +63,7 @@ abstract class GraphSearch_Template {
             return null;
         }
 
-        GraphSearch_Template.addToMap_interface addToMapp = (src1, dst1, adjList) -> {
+        GraphSearch_Strategy.addToMap_interface addToMapp = (src1, dst1, adjList) -> {
             if (!adjList.containsKey(src1)) {
                 adjList.put(src1, new ArrayList<>());
             }
@@ -83,10 +79,10 @@ abstract class GraphSearch_Template {
         visited.add(src_string);
         parent.put(src_string, null);
 
-        addToDataStructure(src_string);
+        this.search.addToDataStructure(src_string);
 
-        while (!isEmpty()) {
-            String curr = removeFromDataStructure();
+        while (!this.search.isEmpty()) {
+            String curr = this.search.removeFromDataStructure();
             if (curr.equals(dst_string)) {
                 return getPath(src_string, dst_string, parent);
             }
@@ -95,10 +91,58 @@ abstract class GraphSearch_Template {
                 if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
                     parent.put(neighbor, curr);
-                    addToDataStructure(neighbor);
+                    this.search.addToDataStructure(neighbor);
                 }
             }
         }
         return null;
+    }
+}
+interface GraphSearch_interface
+{
+    public void addToDataStructure(String string);
+
+    public String removeFromDataStructure();
+
+    public boolean isEmpty();
+}
+
+class BFS implements GraphSearch_interface
+{
+    private Queue<String> queue = new LinkedList<>();
+    public void addToDataStructure(String string) {
+        queue.add(string);
+    }
+
+    public String removeFromDataStructure() {
+        return queue.poll();
+    }
+
+    public boolean isEmpty() {
+        return queue.isEmpty();
+    }
+}
+
+class DFS implements GraphSearch_interface {
+
+    private Stack<String> stack = new Stack<>();
+
+    public void addToDataStructure(String string) {
+        stack.add(string);
+    }
+
+    public String removeFromDataStructure() {
+        return stack.pop();
+    }
+
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+}
+
+class GraphSearch extends GraphSearch_Strategy {
+
+    GraphSearch(MutableGraph graph, GraphSearch_interface search_algo) {
+        super(graph, search_algo);
     }
 }
