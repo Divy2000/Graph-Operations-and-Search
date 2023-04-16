@@ -4,7 +4,7 @@ import guru.nidi.graphviz.model.MutableGraph;
 
 import java.util.Stack;
 
-public class DFS extends GraphSearch{
+public class DFS extends GraphSearch_Template {
 
     private Stack<String> stack = new Stack<>();
     DFS(MutableGraph graph) {

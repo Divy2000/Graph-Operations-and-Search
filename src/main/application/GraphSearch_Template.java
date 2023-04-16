@@ -6,14 +6,14 @@ import guru.nidi.graphviz.model.Node;
 
 import java.util.*;
 
-abstract class GraphSearch {
+abstract class GraphSearch_Template {
     private MutableGraph graph;
 
-    GraphSearch (MutableGraph graph) {
+    GraphSearch_Template(MutableGraph graph) {
         this.graph = graph;
     }
 
-    private Map<String, List<String>> getAdjList(GraphSearch.addToMap_interface addToMapp, Map<String, List<String>> adjList) {
+    private Map<String, List<String>> getAdjList(GraphSearch_Template.addToMap_interface addToMapp, Map<String, List<String>> adjList) {
         if (graph.isDirected() == false) {
             for(Link edge: graph.edges()) {
                 String source = edge.name().toString().split("--")[0];
@@ -67,7 +67,7 @@ abstract class GraphSearch {
             return null;
         }
 
-        GraphSearch.addToMap_interface addToMapp = (src1, dst1, adjList) -> {
+        GraphSearch_Template.addToMap_interface addToMapp = (src1, dst1, adjList) -> {
             if (!adjList.containsKey(src1)) {
                 adjList.put(src1, new ArrayList<>());
             }
