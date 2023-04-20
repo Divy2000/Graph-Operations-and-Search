@@ -6,24 +6,16 @@ import guru.nidi.graphviz.model.Node;
 
 import java.util.*;
 
-class GraphSearch_Strategy {
+abstract class GraphSearch_Template {
     private MutableGraph graph;
-    GraphSearch_interface search;
-    Algorithm search_algo;
+    private Algorithm searchAlgo;
 
-    GraphSearch_Strategy(MutableGraph graph, Algorithm search_algo) {
+    GraphSearch_Template(MutableGraph graph, Algorithm searchAlgo) {
         this.graph = graph;
-        this.search_algo = search_algo;
-        if (search_algo == Algorithm.BFS) {
-            this.search = new BFS_Strategy();
-        } else if (search_algo == Algorithm.DFS) {
-            this.search = new DFS_Strategy();
-        } else if (search_algo == Algorithm.RandomWalk) {
-            this.search = new RandomWalk_Strategy();
-        }
+        this.searchAlgo = searchAlgo;
     }
 
-    protected Map<String, List<String>> getAdjList(GraphSearch_Strategy.addToMap_interface addToMapp, Map<String, List<String>> adjList) {
+    private Map<String, List<String>> getAdjList(GraphSearch_Template.addToMap_interface addToMapp, Map<String, List<String>> adjList) {
         if (graph.isDirected() == false) {
             for(Link edge: graph.edges()) {
                 String source = edge.name().toString().split("--")[0];
@@ -41,7 +33,7 @@ class GraphSearch_Strategy {
         return adjList;
     }
 
-    protected Path getPath(String source, String destination, Map<String, String> parent) {
+    private Path getPath(String source, String destination, Map<String, String> parent) {
         Path path = new Path();
         String curr = destination;
         while (curr != null) {
@@ -59,6 +51,14 @@ class GraphSearch_Strategy {
         Map<String, List<String>> addEdge(String source, String destination, Map<String, List<String>> adjList);
     }
 
+    public abstract void addToDataStructure(String string);
+
+    public abstract String removeFromDataStructure();
+
+    public abstract boolean isEmpty();
+
+    public abstract IntermediateObjects subSearchfunction(Set<String> visited, Map<String, String> parent, List<String> neighbors, String curr);
+
     public Path GraphSearch(Node source, Node destination, Set<String> labels) {
         String src_string = source.name().toString();
         String dst_string = destination.name().toString();
@@ -71,7 +71,7 @@ class GraphSearch_Strategy {
             return null;
         }
 
-        GraphSearch_Strategy.addToMap_interface addToMapp = (src1, dst1, adjList) -> {
+        GraphSearch_Template.addToMap_interface addToMapp = (src1, dst1, adjList) -> {
             if (!adjList.containsKey(src1)) {
                 adjList.put(src1, new ArrayList<>());
             }
@@ -79,7 +79,7 @@ class GraphSearch_Strategy {
             return adjList;
         };
 
-        while(true) {
+        while (true) {
             Map<String, List<String>> adjList = new HashMap<>();
             adjList = getAdjList(addToMapp, adjList);
             Map<String, String> parent = new HashMap<>();
@@ -87,82 +87,51 @@ class GraphSearch_Strategy {
             visited.add(src_string);
             parent.put(src_string, null);
 
-            this.search.addToDataStructure(src_string);
+            addToDataStructure(src_string);
 
-            while (!this.search.isEmpty()) {
-                String curr = this.search.removeFromDataStructure();
+            while (!isEmpty()) {
+                String curr = removeFromDataStructure();
                 if (curr.equals(dst_string)) {
                     return getPath(src_string, dst_string, parent);
                 }
+
                 List<String> neighbors = adjList.getOrDefault(curr, new ArrayList<>());
-                IntermediateObjects objects = this.search.subSearchfunction(visited, parent, neighbors, curr);
+                IntermediateObjects objects = subSearchfunction(visited, parent, neighbors, curr);
                 visited = objects.visited;
                 parent = objects.parent;
-                if (this.search_algo == Algorithm.RandomWalk) {
+                if (this.searchAlgo == Algorithm.RandomWalk) {
                     System.out.println(getPath(src_string, curr, parent));
                 }
             }
-            if (this.search_algo != Algorithm.RandomWalk) {
+            if (searchAlgo != Algorithm.RandomWalk) {
                 return null;
             }
         }
     }
 }
-interface GraphSearch_interface
-{
-    void addToDataStructure(String string);
 
-    String removeFromDataStructure();
-
-    boolean isEmpty();
-
-    IntermediateObjects subSearchfunction(Set<String> visited, Map<String, String> parent, List<String> neighbors, String curr);
-}
-
-class BFS_Strategy implements GraphSearch_interface
-{
+class BFS_Template extends GraphSearch_Template {
     private Queue<String> queue = new LinkedList<>();
+    BFS_Template(MutableGraph graph, Algorithm searchAlgo) {
+        super(graph, searchAlgo);
+    }
+
+    @Override
     public void addToDataStructure(String string) {
         queue.add(string);
     }
 
+    @Override
     public String removeFromDataStructure() {
         return queue.poll();
     }
 
+    @Override
     public boolean isEmpty() {
         return queue.isEmpty();
     }
 
-    public IntermediateObjects subSearchfunction(Set<String> visited, Map<String, String> parent,List<String> neighbors, String curr) {
-        for (String neighbor : neighbors) {
-            if (!visited.contains(neighbor)) {
-                visited.add(neighbor);
-                parent.put(neighbor, curr);
-                addToDataStructure(neighbor);
-            }
-        }
-        IntermediateObjects objects = new IntermediateObjects(visited, parent);
-        return objects;
-    }
-}
-
-class DFS_Strategy implements GraphSearch_interface {
-
-    private Stack<String> stack = new Stack<>();
-
-    public void addToDataStructure(String string) {
-        stack.add(string);
-    }
-
-    public String removeFromDataStructure() {
-        return stack.pop();
-    }
-
-    public boolean isEmpty() {
-        return stack.isEmpty();
-    }
-
+    @Override
     public IntermediateObjects subSearchfunction(Set<String> visited, Map<String, String> parent, List<String> neighbors, String curr) {
         for (String neighbor : neighbors) {
             if (!visited.contains(neighbor)) {
@@ -176,22 +145,65 @@ class DFS_Strategy implements GraphSearch_interface {
     }
 }
 
-class RandomWalk_Strategy implements GraphSearch_interface {
-    private Stack<String> stack = new Stack<>();
-    private Random random = new Random();
+class DFS_Template extends GraphSearch_Template {
 
+    private Stack<String> stack = new Stack<>();
+    DFS_Template(MutableGraph graph, Algorithm searchAlgo) {
+        super(graph, searchAlgo);
+    }
+    @Override
     public void addToDataStructure(String string) {
         stack.add(string);
     }
 
+    @Override
+    public String removeFromDataStructure() {
+        return stack.pop();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+
+    @Override
+    public IntermediateObjects subSearchfunction(Set<String> visited, Map<String, String> parent, List<String> neighbors, String curr) {
+        for (String neighbor : neighbors) {
+            if (!visited.contains(neighbor)) {
+                visited.add(neighbor);
+                parent.put(neighbor, curr);
+                addToDataStructure(neighbor);
+            }
+        }
+        IntermediateObjects objects = new IntermediateObjects(visited, parent);
+        return objects;
+    }
+}
+
+class RandomWalk_Template extends GraphSearch_Template {
+    RandomWalk_Template(MutableGraph graph, Algorithm searchAlgo) {
+        super(graph, searchAlgo);
+    }
+    private Stack<String> stack = new Stack<>();
+    private Random random = new Random();
+
+    @Override
+    public void addToDataStructure(String string) {
+        stack.add(string);
+    }
+
+    @Override
     public String removeFromDataStructure() {
         int randomIndex = random.nextInt(stack.size());
         return stack.remove(randomIndex);
     }
 
+    @Override
     public boolean isEmpty() {
         return stack.isEmpty();
     }
+
+    @Override
     public IntermediateObjects subSearchfunction(Set<String> visited, Map<String, String> parent, List<String> neighbors, String curr) {
         if (neighbors.size() > 0) {
             String neighbor = neighbors.get(random.nextInt(neighbors.size()));

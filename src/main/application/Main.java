@@ -97,7 +97,7 @@ public class Main {
                         node1 = inputScanner.nextLine();
                         System.out.println("Enter the second/target node");
                         node2 = inputScanner.nextLine();
-                        System.out.println("Enter the search type 'bfs' or 'dfs'");
+                        System.out.println("Enter the search type 'bfs', 'dfs' or 'rw'(for random walk search)");
                         boolean validSearchType = false;
                         Algorithm algo = null;
                         while (!validSearchType) {
@@ -108,7 +108,10 @@ public class Main {
                           } else if (searchType_s.toLowerCase().equals("dfs")) {
                             algo = Algorithm.DFS;
                             validSearchType = true;
-                          } else {
+                          } else if (searchType_s.toLowerCase().equals("rw")) {
+                              algo = Algorithm.RandomWalk;
+                              validSearchType = true;
+                          }else {
                             System.out.println("Please enter valid search type");
                           }
                         }

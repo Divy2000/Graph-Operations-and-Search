@@ -14,7 +14,8 @@ import static guru.nidi.graphviz.model.Factory.*;
 
 enum Algorithm {
     BFS,
-    DFS
+    DFS,
+    RandomWalk
 }
 public class myGraphClass {
     MutableGraph graph = null;
@@ -261,17 +262,23 @@ public class myGraphClass {
     }
 
     public Path GraphSearch(Node source, Node destination, Algorithm algo) {
-        GraphSearch graphSearch;
-        switch(algo) {
-          case BFS:
-              BFS bfs = new BFS();
-              graphSearch = new GraphSearch(graph, bfs);
-              return graphSearch.GraphSearch(source, destination, getLabels());
-          case DFS:
-              DFS dfs = new DFS();
-              graphSearch = new GraphSearch(graph, dfs);
-              return graphSearch.GraphSearch(source, destination, getLabels());
+
+        // Strategy implementation
+//        GraphSearch_Strategy graphSearch;
+//        graphSearch = new GraphSearch_Strategy(graph, algo);
+//        return graphSearch.GraphSearch(source, destination, getLabels());
+
+        // Template implementation
+        if (algo == Algorithm.BFS) {
+            BFS_Template bfs = new BFS_Template(graph, algo);
+            return bfs.GraphSearch(source, destination, getLabels());
+        } else if (algo == Algorithm.DFS) {
+            DFS_Template dfs = new DFS_Template(graph, algo);
+            return dfs.GraphSearch(source, destination, getLabels());
+        } else if (algo == Algorithm.RandomWalk) {
+            RandomWalk_Template randomWalk = new RandomWalk_Template(graph, algo);
+            return randomWalk.GraphSearch(source, destination, getLabels());
         }
         return null;
-      }
+    }
 }
