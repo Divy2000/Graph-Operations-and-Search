@@ -19,7 +19,7 @@ public class Main {
         }
         String nodeLabel, nodeLabels, node1, node2, filepath;
         String[] nodeLabelList;
-        while(running) {
+        while (running) {
                 System.out.println("\nChoose one of the following options");
                 System.out.println("0 -> Print graph details");
                 System.out.println("1 -> Output graph details to a text file");
@@ -31,7 +31,7 @@ public class Main {
                 System.out.println("7 -> Remove an edge from the graph");
                 System.out.println("8 -> Output graph to .dot file");
                 System.out.println("9 -> Output graph to an image file");
-                System.out.println("10 -> Perform BFS search or DFS search in the graph");
+                System.out.println("10 -> Perform BFS, DFS or Random Walk Search in the graph");
                 System.out.println("Q -> Exit the software");
                 System.out.println("Enter your choice");
 
@@ -97,23 +97,30 @@ public class Main {
                         node1 = inputScanner.nextLine();
                         System.out.println("Enter the second/target node");
                         node2 = inputScanner.nextLine();
-                        System.out.println("Enter the search type 'bfs' or 'dfs'");
+                        System.out.println("Enter the search type 'bfs', 'dfs' or 'rw'(for random walk search)");
                         boolean validSearchType = false;
-                        SearchType searchType = null;
+                        Algorithm algo = null;
                         while (!validSearchType) {
                           String searchType_s = inputScanner.nextLine();
                           if (searchType_s.toLowerCase().equals("bfs")) {
-                            searchType = SearchType.BFS;
+                            algo = Algorithm.BFS;
                             validSearchType = true;
                           } else if (searchType_s.toLowerCase().equals("dfs")) {
-                            searchType = SearchType.DFS;
+                            algo = Algorithm.DFS;
                             validSearchType = true;
-                          } else {
+                          } else if (searchType_s.toLowerCase().equals("rw")) {
+                              algo = Algorithm.RandomWalk;
+                              validSearchType = true;
+                          }else {
                             System.out.println("Please enter valid search type");
                           }
                         }
-                        Path p = g.GraphSearch(node(node1), node(node2), searchType);
-                        System.out.println(p.toString());
+                        Path path = g.GraphSearch(node(node1), node(node2), algo);
+                        if (path != null) {
+                            System.out.println(path);
+                        } else {
+                            System.out.println("The path cannot be found");
+                        }
                         break;
                     case "Q":
                         running = false;

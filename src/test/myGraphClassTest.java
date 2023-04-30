@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 class myGraphClassTest {
-    String filepath = "src/main/testGraph.dot";
+    String filepath = "src/main/input2.dot";
     @Test
     void feature1() {
         myGraphClass g = new myGraphClass();
@@ -18,19 +18,17 @@ class myGraphClassTest {
             throw new RuntimeException(e);
         }
         boolean pass = false;
-        String[] nodeLabelsToCheck = {"red", "pink", "green", "blue", "white", "yellow", "black", "cyan"};
+        String[] nodeLabelsToCheck = {"a", "b", "c", "d", "e", "f", "g", "h"};
         String[][] edges = {
-                {"green", "black"},
-                {"white", "pink"},
-                {"cyan", "green"},
-                {"yellow", "red"},
-                {"white", "yellow"},
-                {"pink", "blue"},
-                {"yellow", "green"},
-                {"pink", "red"},
-                {"blue", "black"},
-                {"red", "black"},
-                {"cyan", "blue"}
+                {"a", "b"},
+                {"b", "c"},
+                {"c", "d"},
+                {"d", "a"},
+                {"a", "e"},
+                {"e", "f"},
+                {"e", "g"},
+                {"f", "h"},
+                {"g", "h"}
         };
         if (g.checkAllNodes(nodeLabelsToCheck) && g.checkEdges(edges)) {
             pass = true;
@@ -71,13 +69,13 @@ class myGraphClassTest {
             throw new RuntimeException(e);
         }
 
-        g.addEdge("red", "blue");
+        g.addEdge("d", "e");
         String[][] edges = {
-                {"red", "blue"},
+                {"d", "e"},
         };
         Assertions.assertTrue(g.checkEdges(edges));
 
-        g.removeEdge("red", "blue");
+        g.removeEdge("d", "e");
         Assertions.assertFalse(g.checkEdges(edges));
     }
 
@@ -89,7 +87,7 @@ class myGraphClassTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String outputPath = "src/main/testGraph_o.dot";
+        String outputPath = "src/main/output2.dot";
         g.outputDOTGraph(outputPath);
         g.outputGraphics("ex1.png", "png");
         File f = new File("ex1.png");
@@ -102,19 +100,17 @@ class myGraphClassTest {
         }
 
         boolean passG = false;
-        String[] nodeLabelsToCheck = {"red", "pink", "green", "blue", "white", "yellow", "black", "cyan"};
+        String[] nodeLabelsToCheck = {"a", "b", "c", "d", "e", "f", "g", "h"};
         String[][] edges = {
-                {"green", "black"},
-                {"white", "pink"},
-                {"cyan", "green"},
-                {"yellow", "red"},
-                {"white", "yellow"},
-                {"pink", "blue"},
-                {"yellow", "green"},
-                {"pink", "red"},
-                {"blue", "black"},
-                {"red", "black"},
-                {"cyan", "blue"}
+                {"a", "b"},
+                {"b", "c"},
+                {"c", "d"},
+                {"d", "a"},
+                {"a", "e"},
+                {"e", "f"},
+                {"e", "g"},
+                {"f", "h"},
+                {"g", "h"}
         };
         if (g.checkAllNodes(nodeLabelsToCheck) && g.checkEdges(edges)) {
             passG = true;

@@ -10,3 +10,7 @@ src/main/testGraph_o.dot
 output.txt
 output.png
 testGraph_o.dot
+/src/main/output2.dot
+exampleGraph.png
+ex.png
+editedInput.dot
