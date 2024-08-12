@@ -51,9 +51,7 @@ Use the following commands to interact with the application:
   - Commit: [f36ef90b4ae229af14958bf57da1d9c8179503c5](https://github.com/Divy2000/CSE464_2023_dpate164/commit/f36ef90b4ae229af14958bf57da1d9c8179503c5)
   
 - **Final Testing**: [82b8581aa5068c9804c18beb58abe7cc01e21766](https://github.com/Divy2000/CSE464_2023_dpate164/commit/82b8581aa5068c9804c18beb58abe7cc01e21766)
-  
-- **Maven Support**: [8c7363bda391c40d0865358f37e1ee66b59063dc](https://github.com/Divy2000/CSE464_2023_dpate164/commit/8c7363bda391c40d0865358f37e1ee66b59063dc)
-  
+
 - **Continuous Integration**: [669e2d62a7a94fbc0a038a561ab0c1f0aa705246](https://github.com/Divy2000/CSE464_2023_dpate164/commit/669e2d62a7a94fbc0a038a561ab0c1f0aa705246)
 
 - **BFS Branch**: [bfs](https://github.com/Divy2000/CSE464_2023_dpate164/tree/bfs)
