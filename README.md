@@ -70,12 +70,6 @@ Use the following commands to interact with the application:
 
 - **Random Walk**: [d7e93ca544637b9c1528202ade4cb161e1ccd803](https://github.com/Divy2000/CSE464_2023_dpate164/commit/d7e93ca544637b9c1528202ade4cb161e1ccd803)
 
-## Resume Points
-
-- **Developed Java application for graph operations**, with features like parsing DOT files, node and edge management, and visualization.
-- **Developed and integrated search algorithms** including Breadth-First Search (BFS), Depth-First Search (DFS).
-- **Provided command-line interface** for interacting with graph structures, performing searches, and exporting results in .dot and image formats.
-
 ## Pull Requests
 
 - [Pull Request #9](https://github.com/Divy2000/CSE464_2023_dpate164/pull/9) - Merging Template and Strategy Patterns
